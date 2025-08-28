@@ -1,0 +1,24 @@
+﻿<Application x:Class="Hardware_Monitor.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Hardware_Monitor"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <Style x:Key="MainButton" TargetType="Button">
+            <Setter Property="BorderThickness" Value="0"/> 
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="ToolTip" Value="Click to view details"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" ShadowDepth="2" Direction="270" BlurRadius="10" Opacity="1"/>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="LightBlue"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Application.Resources>
+</Application>

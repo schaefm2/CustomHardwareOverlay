@@ -1,0 +1,54 @@
+﻿<Window x:Class="Hardware_Monitor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:views="clr-namespace:Hardware_Monitor.Views"
+        xmlns:local="clr-namespace:Hardware_Monitor.ViewModel"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="Manual"
+        Left="0" Top="0" Topmost="True"
+        SizeToContent="Width"
+        >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ItemsControl ItemsSource="{Binding SensorButtons}" Grid.Column="1">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                                   Width="{x:Static SystemParameters.PrimaryScreenWidth}"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.Resources>
+                <DataTemplate DataType="{x:Type local:StaticSensorButton}">
+                    <views:SensorButton Label="{Binding Label}" Value="{Binding SensorValue}" Command="{Binding Command}"/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type local:SensorViewModel}">
+                    <Button Style="{StaticResource MainButton}" Command="{Binding DataContext.RemoveSensorCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                    CommandParameter="{Binding}">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{Binding Name}" FontSize="12" HorizontalAlignment="Center" Foreground="White"/>
+                            <TextBlock Text="{Binding Value}" FontSize="12" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.Resources>
+        </ItemsControl>
+        <Grid Grid.Row="1" Width="800" Height="200" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <views:SensorTree ItemsSource="{Binding CpuSensorTypes}" Visibility="{Binding CpuTreeVisibility}" AddCommand="{Binding AddSensorCommand}"/>
+            <views:SensorTree Grid.Column="1" ItemsSource="{Binding GpuSensorTypes}" Visibility="{Binding GpuTreeVisibility}" AddCommand="{Binding AddSensorCommand}"/>
+            <views:SensorTree Grid.Column="2" ItemsSource="{Binding MemorySensorTypes}" Visibility="{Binding MemoryTreeVisibility}" AddCommand="{Binding AddSensorCommand}"/>
+
+        </Grid>
+
+    </Grid>
+</Window>
